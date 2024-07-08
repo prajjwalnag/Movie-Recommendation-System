@@ -13,7 +13,7 @@ model = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
 
 # Function to convert text to embeddings
 def text_to_embeddings(text):
-    embeddings = model([text])
+    embeddings = model([tgit ext])
     return embeddings
 # read the json file 
 with open(file_path, 'r', encoding='utf-8') as file:
