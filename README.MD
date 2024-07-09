@@ -1,10 +1,12 @@
 # Movie Recommendation System 
-![UserInterface](/images/Asset3.jpeg)
-![Results](/images/Asset2.jpeg)
-![Results](/images/Asset.jpeg)
+
 A movie recommendation system is an advanced algorithm designed to suggest films to users based on their preferences and viewing history. By analyzing user data such as previously watched movies, ratings, and viewing patterns, the system predicts and recommends movies that the user is likely to enjoy. On OTT (Over-The-Top) platforms like Netflix, Amazon Prime, and Disney+, these systems play a crucial role in enhancing user experience by offering personalized content. They use techniques such as collaborative filtering, content-based filtering, and hybrid methods to deliver accurate and tailored movie suggestions, thereby increasing user engagement and satisfaction.mkdir images
 
-![OTT platsforms](images/Ott.jpg)
+![UserInterface](/images/Asset3.jpeg)
+![Results](/images/Asset2.jpeg)![Results](/images/Asset.jpeg)
+
+
+!
 
  
  ## Why build one more MRS when you can watch a movie in any of the OTT ?
@@ -21,47 +23,94 @@ By focusing on how you feel and what you need at the moment, this personalized a
 ![Algorithm](/images/systemdesign.jpg)
  ## System Design Overview
 
-- **Data Collection**
-  - Gather raw data from various sources.
+The system is divided into four parts:
 
-- **Tokenization**
-  - Break down the collected data into smaller units, such as words or phrases.
+1. **Data Collection, Modification, and Storage**: 
+   - Gathering data, making necessary modifications, and storing it appropriately for future use.
 
-- **Vectorization**
-  - Convert the tokenized data into numerical vectors suitable for machine learning algorithms.
+2. **Frontend with Node.js for Search Operations**: 
+   - A Node.js-based frontend interface is developed to facilitate search operations.
 
-- **Database Entry**
-  - Store the vectorized data in a database for efficient retrieval.
+3. **Flask-Based Backend for Database Search**: 
+   - A backend system built with Flask is responsible for searching the database and providing the top 5 search results.
 
-## Search Process
+4. **Frontend for Displaying Movie Posters**: 
+   - A frontend interface to display the movie posters of the fetched search results.
 
-- **Input: Search Phrase**
-  - User inputs a search query.
+## Usage
 
-- **Tokenization of Search Phrase**
-  - Break down the search phrase into smaller units.
+The packages used are listed in the `requirements.txt` file.
 
-- **Vectorization of Search Phrase**
-  - Convert the tokenized search phrase into a numerical vector.
+Install the packages with:
+```bash
+pip install -r requirements.txt
+```
 
-- **Searching**
-  - Match the query vector against the stored vectors in the database to find the closest matches.
 
-- **Result Retrieval**
-  - Retrieve the results that are most relevant to the user's query.
+## Setting Up PGVector in PostgreSQL
 
-- **Render Result**
-  - Present the retrieved results in a user-friendly format.
+To set up PGVector in PostgreSQL, follow these steps:
 
-## Summary
+### Step 1: Install PostgreSQL
 
-- **Data Processing Pipeline**
-  - Data Collection -> Tokenization -> Vectorization -> Database Entry
+Ensure that PostgreSQL is installed on your system. You can download and install it from the [official PostgreSQL website](https://www.postgresql.org/download/).
 
-- **Search Query Pipeline**
-  - Search Phrase -> Tokenization -> Vectorization -> Searching -> Result -> Render Result
+### Step 2: Install PGVector Extension
 
-This structured approach ensures that data is efficiently processed, stored, and retrieved, leveraging tokenization and vectorization techniques to enhance search accuracy and speed.
+1. **Clone the PGVector repository:**
 
-### Results  
+   ```bash
+   git clone https://github.com/pgvector/pgvector.git
+
+    ```
+    Installation process can be followed from this  [link](https://github.com/pgvector/)
+
+2.  **Install PGvector in Python:**
+    PG vector should be also installed in python else it will keep throwing errors.
+    To install PG vector in Python.
+
+    ```bash
+     pip install pgvector
+      ```
+    
+3. **Create a Table** 
+``` bash
+CREATE TABLE IF NOT EXISTS movie_plots (
+    title VARCHAR,
+    director VARCHAR,
+    "cast" VARCHAR,
+    genre VARCHAR,
+    plot TEXT,
+    "year" SMALLINT,
+    wiki VARCHAR,
+    embedding vector(512)
+);
+```
+4. **Connect to database**
+```bash
+conn = psycopg2.connect(
+    dbname='postgres',
+    user='username',
+    password='password',
+    host='localhost',
+    port='5432'
+)
+```
+5. **Insert in the table**
+```bash
+cursor.execute('''
+    INSERT INTO movie_plots (title, director, "cast", genre, plot, "year", wiki, embedding)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                   
+    ''', (
+        row['Title'],
+        row['Director'],
+        row['Cast'],
+        row['Genre'],
+        row['Plot'],
+        row['Release Year'],
+        row['Wiki Page'],
+        embedding_list,
+    ))
+    ```
 

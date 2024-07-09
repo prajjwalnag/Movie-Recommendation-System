@@ -21,7 +21,7 @@ print("Hakuna Matata")
 conn = psycopg2.connect(
     dbname='postgres',
     user='postgres',
-    password='Rex1993',
+    password='pasword',
     host='localhost',
     port='5432'
 )
