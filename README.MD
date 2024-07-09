@@ -112,5 +112,9 @@ cursor.execute('''
         row['Wiki Page'],
         embedding_list,
     ))
-    ```
-
+    '''
+```
+### Step 3: Run the app 
+```bash
+python app.py
+```
